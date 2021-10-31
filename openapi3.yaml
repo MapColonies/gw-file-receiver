@@ -8,48 +8,30 @@ info:
     url: https://opensource.org/licenses/MIT
 
 paths:
-  /anotherResource:
-    get:
-      operationId: getAnotherResource
-      tags:
-        - anotherResource
-      summary: gets the resource
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/anotherResource'
-  /resourceName:
-    get:
-      operationId: getResourceName
-      tags:
-        - resourceName
-      summary: gets the resource
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/resource'
+  /fileReceiver:
     post:
-      operationId: createResource
+      operationId: receiveFile
       tags:
-        - resourceName
-      summary: creates a new record of type resource
+        - fileReceiver
+      summary: save synced file to persistent storage and notify sync manager
+      parameters:
+        - in: header
+          name: filename
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/binaryFile'
       responses:
-        201:
-          description: created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/resource'
+        200:
+          description: OK
         400:
           description: Bad Request
           content:
-            application/json:
+            application/octet-stream:
               schema:
                 $ref: '#/components/schemas/error'
 components:
@@ -61,27 +43,6 @@ components:
       properties:
         message:
           type: string
-    resource:
-      type: object
-      required:
-        - id
-        - name
-        - description
-      properties:
-        id:
-          type: number
-          format: int64
-        name:
-          type: string
-        description:
-          type: string
-    anotherResource:
-      type: object
-      required:
-        - kind
-        - isAlive
-      properties:
-        kind:
-          type: string
-        isAlive:
-          type: boolean
+    binaryFile:
+      type: string
+      format: binary

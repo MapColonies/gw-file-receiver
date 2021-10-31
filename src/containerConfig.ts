@@ -6,9 +6,9 @@ import jsLogger, { LoggerOptions } from '@map-colonies/js-logger';
 import { Metrics } from '@map-colonies/telemetry';
 import { SERVICES, SERVICE_NAME } from './common/constants';
 import { tracing } from './common/tracing';
-import { resourceNameRouterFactory, RESOURCE_NAME_ROUTER_SYMBOL } from './resourceName/routes/resourceNameRouter';
+import { fileReceiverRouterFactory, FILE_RECEIVER_ROUTER_SYMBOL } from './fileReciever/routes/fileReceiverRouter';
 import { InjectionObject, registerDependencies } from './common/dependencyRegistration';
-import { anotherResourceRouterFactory, ANOTHER_RESOURECE_ROUTER_SYMBOL } from './anotherResource/routes/anotherResourceRouter';
+import { GetProvider } from './providers/providerFactory';
 
 export interface RegisterOptions {
   override?: InjectionObject<unknown>[];
@@ -31,8 +31,8 @@ export const registerExternalValues = (options?: RegisterOptions): DependencyCon
     { token: SERVICES.LOGGER, provider: { useValue: logger } },
     { token: SERVICES.TRACER, provider: { useValue: tracer } },
     { token: SERVICES.METER, provider: { useValue: meter } },
-    { token: RESOURCE_NAME_ROUTER_SYMBOL, provider: { useFactory: resourceNameRouterFactory } },
-    { token: ANOTHER_RESOURECE_ROUTER_SYMBOL, provider: { useFactory: anotherResourceRouterFactory } },
+    { token: SERVICES.STORAGE_PROVIDER, provider: { useFactory: GetProvider } },
+    { token: FILE_RECEIVER_ROUTER_SYMBOL, provider: { useFactory: fileReceiverRouterFactory } },
     {
       token: 'onSignal',
       provider: {
