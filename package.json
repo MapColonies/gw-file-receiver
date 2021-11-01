@@ -1,7 +1,7 @@
 {
   "name": "gw-file-receiver",
   "version": "1.0.0",
-  "description": "This is template for map colonies typescript service",
+  "description": "synchronization file receiver service",
   "main": "./src/index.ts",
   "scripts": {
     "test:unit": "jest --config=./tests/configurations/unit/jest.config.js",

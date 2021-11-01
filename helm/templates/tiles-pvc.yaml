@@ -1,0 +1,23 @@
+{{- if and .Values.storage.tilesPvc.enabled .Values.storage.tilesPvc.create -}}
+{{- $releaseName := .Release.Name -}}
+{{- $chartName := include "gw-file-receiver.name" . -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.storage.tilesPvc.name }}
+  labels:
+    app: {{ $chartName }}
+    component: {{ $chartName }}
+    environment: {{ include "gw-file-receiver.environment" . }}
+    release: {{ $releaseName }}
+    {{- include "gw-file-receiver.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.storage.storageClass }}
+  storageClassName: {{ .Values.storage.storageClass }}
+  {{- end }}
+  accessModes:
+    - {{ .Values.storage.accessModes }}
+  resources:
+    requests:
+      storage: {{ .Values.storage.tilesPvc.size }}
+{{- end }}

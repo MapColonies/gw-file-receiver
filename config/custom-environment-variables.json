@@ -54,7 +54,7 @@
     "basePath": "FS_BASE_PATH"
   },
   "storageProvider": "STORAGE_PROVIDER",
-  "syncManagerNotifyReceivedUrl": "SYNC_MANAGER_NOTIFY_RECEIVED_URL",
+  "syncManagerUrl": "SYNC_MANAGER_URL",
   "httpRetry": {
     "attempts": {
       "__name": "HTTP_RETRY_ATTEMPTS",

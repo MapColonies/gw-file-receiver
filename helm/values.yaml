@@ -8,7 +8,7 @@ enabled: true
 environment: development
 replicaCount: 1
 initialDelaySeconds: 60
-nodePort: 30030 #for minikube deployment only
+nodePort: 30037 #for minikube deployment only
 
 cloudProvider:
   dockerRegistryUrl: my-registry-url.io
@@ -18,6 +18,21 @@ image:
   repository: gw-file-receiver
   tag: 'latest'
 
+storage:
+  storageClass: local-storage
+  accessModes: ReadWriteOnce
+  tilesPvc:
+    enabled: false # enable to support fs provider
+    name: internal-pvc
+    create: false #create pvc for local single service deployment
+    size: 5Gi
+    tilesSubPath: tiles
+  tilesPv: #pv for local single service deployment only
+    enabled: false
+    name: 'internal-pv'
+    size: 5Gi
+    hostPath: '/raster'
+
 env:
   port: 8080
   targetPort: 8080
@@ -25,13 +40,33 @@ env:
   logLevel: info
   logPrettyPrintEnabled: false
   responseCompressionEnabled: true
-  requestPayloadLimit: 1mb
+  requestPayloadLimit: 10mb
   tracing:
     enabled: false
     url: http://localhost:55681/v1/trace
   metrics:
     enabled: false
     url: http://localhost:55681/v1/metrics
+  storage:
+    provider: 'S3'
+    S3:
+      enabled: true # enable to support s3 provider
+      endpointUrl: 'http://localhost:9000'
+      bucket: 'rasterTiles'
+      sslEnabled: 'true'
+      secret:
+        name: raster-tiles-s3-secret
+        createSecret: false # secret should be created on higher level for deployments with multiple services
+        accessKeyId: # used only when creating secret
+        secretAccessKey: # used only when creating secret
+    FS:
+      mountRelativeBasePath: 'tiles'
+  httpClient:
+    syncManagerUrl: 'http://localhost:5555'
+    retry:
+      attempts: 3
+      delay: 'exponential'
+      shouldResetTimeout: true
 
 resources:
   enabled: true

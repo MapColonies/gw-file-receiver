@@ -19,5 +19,13 @@ data:
   TELEMETRY_METRICS_ENABLED: 'true'
   TELEMETRY_METRICS_URL: {{ $metricsUrl }}
   {{ end }}
-  LOG_LEVEL: {{ .Values.env.logLevel | quote }}
+  STORAGE_PROVIDER: {{ .Values.env.storage.provider | quote }}
+  S3_ENDPOINT_URL: {{ .Values.env.storage.S3.endpointUrl | quote }}
+  S3_BUCKET: {{ .Values.env.storage.S3.bucket | quote }}
+  S3_SSL_ENABLED: {{ .Values.env.storage.S3.sslEnabled | quote }}
+  FS_BASE_PATH: {{ .Values.env.storage.FS.mountRelativeBasePath | quote }}
+  SYNC_MANAGER_URL: {{ .Values.env.httpClient.syncManagerUrl | quote }}
+  HTTP_RETRY_ATTEMPTS: {{ .Values.env.httpClient.retry.attempts | quote }}
+  HTTP_RETRY_DELAY: {{ .Values.env.httpClient.retry.delay | quote }}
+  HTTP_RETRY_RESET_TIMEOUT: {{ .Values.env.httpClient.retry.shouldResetTimeout | quote }}
 {{- end }}

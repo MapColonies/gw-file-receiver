@@ -1,0 +1,151 @@
+NAME: a
+LAST DEPLOYED: Mon Nov  1 14:11:10 2021
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+TEST SUITE: None
+HOOKS:
+MANIFEST:
+---
+# Source: gw-file-receiver/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: a-gw-file-receiver-configmap
+data:
+  REQUEST_PAYLOAD_LIMIT: "1mb"
+  RESPONSE_COMPRESSION_ENABLED: "true"
+  LOG_LEVEL: "debug"
+  LOG_PRETTY_PRINT_ENABLED: "false"
+  STORAGE_PROVIDER: S3
+  S3_ENDPOINT_URL: http://localhost:9000
+  S3_BUCKET: rasterTiles
+  S3_SSL_ENABLED: true
+  FS_BASE_PATH: tiles
+  SYNC_MANAGER_URL: http://localhost:5555
+  HTTP_RETRY_ATTEMPTS: 3
+  HTTP_RETRY_DELAY: exponential
+  HTTP_RETRY_RESET_TIMEOUT: true
+---
+# Source: gw-file-receiver/templates/tiles-pv.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiels-pv
+spec:
+  storageClassName: hostPath
+  capacity:
+    storage:  5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /raster
+---
+# Source: gw-file-receiver/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: a-gw-file-receiver
+  labels:
+    app: gw-file-receiver
+    component: gw-file-receiver
+    environment: development
+    release: a
+    helm.sh/chart: gw-file-receiver-1.0.0
+    app.kubernetes.io/name: gw-file-receiver
+    app.kubernetes.io/instance: a
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
+      nodePort: 30037
+  selector:
+    app: gw-file-receiver
+    release: a
+    run: a-gw-file-receiver
+    app.kubernetes.io/name: gw-file-receiver
+    app.kubernetes.io/instance: a
+---
+# Source: gw-file-receiver/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a-gw-file-receiver
+  labels:
+    app: gw-file-receiver
+    component: gw-file-receiver
+    environment: development
+    release: a
+    helm.sh/chart: gw-file-receiver-1.0.0
+    app.kubernetes.io/name: gw-file-receiver
+    app.kubernetes.io/instance: a
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gw-file-receiver
+      release: a
+      run: a-gw-file-receiver
+      app.kubernetes.io/name: gw-file-receiver
+      app.kubernetes.io/instance: a
+  template:
+    metadata:
+      labels:
+        app: gw-file-receiver
+        release: a
+        run: a-gw-file-receiver
+        app.kubernetes.io/name: gw-file-receiver
+        app.kubernetes.io/instance: a
+    spec:
+      volumes:
+        - name: tiles-volume
+          persistentVolumeClaim:
+            claimName: tiles-pvc
+      containers:
+        - name: a-gw-file-receiver-deployment
+          image: localhost:5000/gw-file-receiver:latest
+          volumeMounts:
+            - name: tiles-volume
+              mountPath: /tiles
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: FS_MOUNT_PATH
+              value: '/tiles'
+            - name: S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: raster-tiles-s3-secret
+                  key: accessKeyId
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: raster-tiles-s3-secret
+                  key: secretAccessKey
+          envFrom:
+            - configMapRef:
+                name: a-gw-file-receiver-configmap
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              path: /liveness
+              port: http
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+

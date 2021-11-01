@@ -1,0 +1,10 @@
+{{- if and .Values.env.storage.S3.enabled .Values.env.storage.S3.secret.createSecret -}}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.env.storage.S3.secret.name }}
+type: Opaque
+stringData:
+  accessKeyId: {{ quote .Values.env.storage.S3.secret.accessKeyId }}
+  secretAccessKey: {{ quote .Values.env.storage.S3.secret.secretAccessKey }}
+{{- end }}
