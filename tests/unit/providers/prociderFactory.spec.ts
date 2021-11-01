@@ -9,35 +9,33 @@ import { configMock, initConfig, clearConfig, setConfigValue } from '../../mocks
 describe('ProviderFactory', () => {
   beforeEach(function () {
     initConfig();
-    container.register(SERVICES.CONFIG, { useValue:configMock});
-    container.register(SERVICES.LOGGER, { useValue: jsLogger({ enabled: false }) })
+    container.register(SERVICES.CONFIG, { useValue: configMock });
+    container.register(SERVICES.LOGGER, { useValue: jsLogger({ enabled: false }) });
   });
 
-  afterEach(()=>{
+  afterEach(() => {
     clearConfig();
     jest.resetAllMocks();
     container.clearInstances();
-  })
+  });
 
   describe('#GetProvider', () => {
-    it('returns Fs provider on fs config',function () {
-      setConfigValue('storageProvider','Fs');
+    it('returns Fs provider on fs config', function () {
+      setConfigValue('storageProvider', 'Fs');
       // action
       const provider = GetProvider(container);
 
       // expectation
-     expect(provider).toBeInstanceOf(FsStorageProvider);
+      expect(provider).toBeInstanceOf(FsStorageProvider);
     });
 
-    it('returns S3 provider on s3 config',function () {
-      setConfigValue('storageProvider','s3');
+    it('returns S3 provider on s3 config', function () {
+      setConfigValue('storageProvider', 's3');
       // action
       const provider = GetProvider(container);
 
       // expectation
-     expect(provider).toBeInstanceOf(S3StorageProvider);
+      expect(provider).toBeInstanceOf(S3StorageProvider);
     });
-
-  
   });
 });

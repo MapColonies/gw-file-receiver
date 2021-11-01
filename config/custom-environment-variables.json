@@ -45,7 +45,7 @@
     "endpointUrl": "S3_ENDPOINT_URL",
     "bucket": "S3_BUCKET",
     "sslEnabled": {
-      "__name":"S3_SSL_ENABLED",
+      "__name": "S3_SSL_ENABLED",
       "__format": "boolean"
     }
   },

@@ -1,9 +1,9 @@
-import { SyncManagerClient } from "../../src/clients/syncManagerClient";
+import { SyncManagerClient } from '../../src/clients/syncManagerClient';
 
 const notifyReceivedMock = jest.fn();
 
 const syncManagerClientMock = {
-  notifyReceived: notifyReceivedMock
+  notifyReceived: notifyReceivedMock,
 } as unknown as SyncManagerClient;
 
-export {syncManagerClientMock, notifyReceivedMock }
+export { syncManagerClientMock, notifyReceivedMock };
