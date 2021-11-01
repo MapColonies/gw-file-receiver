@@ -1,11 +1,15 @@
 import { Logger } from '@map-colonies/js-logger';
+import { BadRequestError } from '@map-colonies/error-types';
 import { RequestHandler } from 'express';
 import httpStatus from 'http-status-codes';
 import { injectable, inject } from 'tsyringe';
 import { SERVICES } from '../../common/constants';
 import { FileReceiverManager } from '../models/fileReceiverManager';
 
-type ReceiveFileHandler = RequestHandler<undefined, undefined, unknown>;
+interface ReceiveFileQuery {
+  filename?: string;
+}
+type ReceiveFileHandler = RequestHandler<undefined, undefined, unknown, ReceiveFileQuery>;
 
 @injectable()
 export class FileReceiverController {
@@ -13,7 +17,10 @@ export class FileReceiverController {
 
   public receiveFile: ReceiveFileHandler = async (req, res, next) => {
     try {
-      const filePath = req.headers['filename'] as string;
+      const filePath = (req.headers['filename'] as string | undefined) ?? req.query.filename;
+      if (filePath === undefined) {
+        throw new BadRequestError('"filename" is required in header or query');
+      }
       await this.manager.saveFile(filePath, req);
       return res.sendStatus(httpStatus.OK);
     } catch (err) {

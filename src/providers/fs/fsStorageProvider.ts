@@ -10,7 +10,7 @@ import { IFsConfig } from './iFsConfig';
 export class FsStorageProvider implements IStorageProvider {
   private readonly basePath: string;
 
-  public constructor(@inject(SERVICES.config) config: IConfig) {
+  public constructor(@inject(SERVICES.CONFIG) config: IConfig) {
     const fsConfig = config.get<IFsConfig>('FS');
     this.basePath = join(fsConfig.mountPath, fsConfig.basePath);
   }

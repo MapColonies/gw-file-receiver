@@ -7,9 +7,9 @@ import { S3StorageProvider } from './s3/s3StorageProvider';
 import { IStorageProvider } from './storageProvider';
 
 export const GetProvider = (container: DependencyContainer): IStorageProvider => {
-  const config = container.resolve<IConfig>(SERVICES.Config);
+  const config = container.resolve<IConfig>(SERVICES.CONFIG);
   const providerType = config.get<string>('storageProvider').toUpperCase();
-  const logger = container.resolve<Logger>(SERVICES.logger);
+  const logger = container.resolve<Logger>(SERVICES.LOGGER);
   logger.info(`loading ${providerType} storage provider`);
   switch (providerType) {
     case 'FS':

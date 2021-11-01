@@ -6,7 +6,7 @@ import { SERVICES } from '../common/constants';
 
 @injectable()
 export class SyncManagerClient extends HttpClient {
-  public constructor(@inject(SERVICES.config) config: IConfig, @inject(SERVICES.LOGGER) logger: Logger) {
+  public constructor(@inject(SERVICES.CONFIG) config: IConfig, @inject(SERVICES.LOGGER) logger: Logger) {
     super(logger, config.get('syncManagerUrl'), 'SyncManager', config.get('httpRetry'));
   }
 

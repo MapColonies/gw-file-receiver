@@ -11,7 +11,7 @@ export class S3StorageProvider implements IStorageProvider {
   private readonly bucket: string;
   private readonly s3: S3;
 
-  public constructor(@inject(SERVICES.config) config: IConfig) {
+  public constructor(@inject(SERVICES.CONFIG) config: IConfig) {
     const s3Config = config.get<IS3Config>('S3');
     this.bucket = s3Config.bucket;
     const credentials: CredentialsOptions = {
