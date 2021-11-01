@@ -15,7 +15,7 @@ cloudProvider:
   flavor: openshift
 
 image:
-  repository: ts-server-boilerplate
+  repository: gw-file-receiver
   tag: 'latest'
 
 env:
