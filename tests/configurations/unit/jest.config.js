@@ -18,6 +18,8 @@ module.exports = {
     '!**/controllers/**',
     '!**/routes/**',
     '!<rootDir>/src/*',
+    '!<rootDir>/src/providers/*/*.ts',
+    '!<rootDir>/src/clients/*.ts',
   ],
   coverageDirectory: '<rootDir>/coverage',
   reporters: [
@@ -33,7 +35,7 @@ module.exports = {
       branches: 80,
       functions: 80,
       lines: 80,
-      statements: -10,
+      statements: 80,
     },
   },
 };

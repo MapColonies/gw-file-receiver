@@ -1,0 +1,16 @@
+{{- if .Values.storage.tilesPv.enabled -}}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.storage.tilesPv.name }}
+spec:
+  {{- if .Values.storage.storageClass }}
+  storageClassName: {{ .Values.storage.storageClass }}
+  {{- end }}
+  capacity:
+    storage:  {{ .Values.storage.tilesPv.size }}
+  accessModes:
+    - {{ .Values.storage.accessModes }}
+  hostPath:
+    path: {{ .Values.storage.tilesPv.hostPath }}
+{{- end }}
