@@ -2,5 +2,5 @@ apiVersion: v2
 name: gw-file-receiver
 description: A Helm chart for gw-file-receiver service
 type: application
-version: 1.0.0
-appVersion: 1.0.0
+version: 1.1.0
+appVersion: 1.1.0

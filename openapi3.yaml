@@ -2,11 +2,10 @@ openapi: 3.0.1
 info:
   title: gw-file-receiver
   description: synchronization file receiver service
-  version: 1.0.0
+  version: 1.1.0
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-
 paths:
   /fileReceiver:
     post:
@@ -29,13 +28,13 @@ paths:
             schema:
               $ref: '#/components/schemas/binaryFile'
       responses:
-        200:
+        '200':
           description: OK
           content:
             text/plain:
               schema:
                 type: string
-        400:
+        '400':
           description: Bad Request
           content:
             application/json:
