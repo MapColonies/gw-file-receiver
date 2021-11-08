@@ -17,8 +17,8 @@ export class FileReceiverController {
 
   public receiveFile: ReceiveFileHandler = async (req, res, next) => {
     try {
-      let filenameHeader = req.headers['filename'] as string | undefined
-      if (filenameHeader != undefined){
+      let filenameHeader = req.headers['filename'] as string | undefined;
+      if (filenameHeader != undefined) {
         filenameHeader = decodeURIComponent(filenameHeader);
       }
       const filePath = filenameHeader ?? req.query.filename;

@@ -11,12 +11,12 @@ export class SyncManagerClient extends HttpClient {
   }
 
   public async notifyReceived(resourceId: string, version: string, fileName: string, fileContentString?: string): Promise<void> {
-    const fileContent = fileContentString !== undefined ? JSON.parse(fileContentString) as unknown : undefined; 
+    const fileContent = fileContentString !== undefined ? (JSON.parse(fileContentString) as unknown) : undefined;
     const body = {
       resourceId,
       version,
       fileName,
-      fileContent
+      fileContent,
     };
     await this.post('/fileRecived', body);
   }
