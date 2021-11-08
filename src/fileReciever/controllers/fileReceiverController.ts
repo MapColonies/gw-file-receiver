@@ -17,7 +17,11 @@ export class FileReceiverController {
 
   public receiveFile: ReceiveFileHandler = async (req, res, next) => {
     try {
-      const filePath = (req.headers['filename'] as string | undefined) ?? req.query.filename;
+      let filenameHeader = req.headers['filename'] as string | undefined
+      if (filenameHeader != undefined){
+        filenameHeader = decodeURIComponent(filenameHeader);
+      }
+      const filePath = filenameHeader ?? req.query.filename;
       if (filePath === undefined) {
         throw new BadRequestError('"filename" is required in header or query');
       }
