@@ -17,8 +17,12 @@ export class FileReceiverManager {
   public async saveFile(filePath: string, contentStream: Readable): Promise<void> {
     const nameParts = filePath.split('/');
     if (!filePath.endsWith('json')) {
-      await this.provider.saveFile(filePath, contentStream);
-      await this.syncManagerClient.notifyReceived(nameParts[0], nameParts[1], filePath);
+      if (!(await this.provider.exists(filePath))) {
+        await this.provider.saveFile(filePath, contentStream);
+        await this.syncManagerClient.notifyReceived(nameParts[0], nameParts[1], filePath);
+      } else {
+        this.logger.warn(`ignoring received duplicate file: "${filePath}"`);
+      }
     } else {
       const content = await streamToString(contentStream);
       await this.syncManagerClient.notifyReceived(nameParts[0], nameParts[1], filePath, content);
