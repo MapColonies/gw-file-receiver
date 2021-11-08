@@ -6,7 +6,7 @@ import httpStatusCodes from 'http-status-codes';
 import { getApp } from '../../../src/app';
 import { SyncManagerClient } from '../../../src/clients/syncManagerClient';
 import { SERVICES } from '../../../src/common/constants';
-import { providerMock, saveFileMock } from '../../mocks/storageProvider';
+import { providerMock, saveFileMock, fileExistsMock } from '../../mocks/storageProvider';
 import { configMock, initConfig, clearConfig } from '../../mocks/config';
 
 import { FileReceiverRequestSender } from './helpers/requestSender';
@@ -37,17 +37,32 @@ describe('fileReceiver', function () {
   });
 
   describe('Happy Path', function () {
-    it('should return 200 status code when binary png is received', async function () {
+    it('should return 200 status code when binary png is received and file dont exist', async function () {
       notifyReceivedMock.mockResolvedValue(undefined);
+      fileExistsMock.mockResolvedValue(false);
 
       const response = await requestSender.sendFile('name/ver/orto/8/64/544.png', Buffer.from('tests'));
 
       expect(response.status).toBe(httpStatusCodes.OK);
       expect(response).toSatisfyApiSpec();
+      expect(fileExistsMock).toHaveBeenCalledTimes(1);
       expect(saveFileMock).toHaveBeenCalledTimes(1);
       expect(saveFileMock).toHaveBeenCalledWith('name/ver/orto/8/64/544.png', expect.any(Readable));
       expect(notifyReceivedMock).toHaveBeenCalledTimes(1);
       expect(notifyReceivedMock).toHaveBeenCalledWith('name', 'ver', 'name/ver/orto/8/64/544.png');
+    });
+
+    it('should return 200 status code without saving when binary png is received and file exist', async function () {
+      notifyReceivedMock.mockResolvedValue(undefined);
+      fileExistsMock.mockResolvedValue(true);
+
+      const response = await requestSender.sendFile('name/ver/orto/8/64/544.png', Buffer.from('tests'));
+
+      expect(response.status).toBe(httpStatusCodes.OK);
+      expect(response).toSatisfyApiSpec();
+      expect(fileExistsMock).toHaveBeenCalledTimes(1);
+      expect(saveFileMock).toHaveBeenCalledTimes(0);
+      expect(notifyReceivedMock).toHaveBeenCalledTimes(0);
     });
 
     it('should return 200 status code when binary json is received', async function () {
@@ -57,18 +72,36 @@ describe('fileReceiver', function () {
 
       expect(response.status).toBe(httpStatusCodes.OK);
       expect(response).toSatisfyApiSpec();
+      expect(fileExistsMock).toHaveBeenCalledTimes(0);
       expect(saveFileMock).toHaveBeenCalledTimes(0);
       expect(notifyReceivedMock).toHaveBeenCalledTimes(1);
       expect(notifyReceivedMock).toHaveBeenCalledWith('name', 'ver', 'name/ver/orto/8/64/544.json', 'tests json');
     });
 
-    it('should return 200 status code when binary png is received with query filename', async function () {
+    it('should return 200 status code when binary png is received with query filename  and file dont exist', async function () {
       notifyReceivedMock.mockResolvedValue(undefined);
+      fileExistsMock.mockResolvedValue(false);
 
       const response = await requestSender.sendFile('name/ver/orto/8/64/544.png', Buffer.from('tests'), true);
 
       expect(response.status).toBe(httpStatusCodes.OK);
       expect(response).toSatisfyApiSpec();
+      expect(fileExistsMock).toHaveBeenCalledTimes(1);
+      expect(saveFileMock).toHaveBeenCalledTimes(1);
+      expect(saveFileMock).toHaveBeenCalledWith('name/ver/orto/8/64/544.png', expect.any(Readable));
+      expect(notifyReceivedMock).toHaveBeenCalledTimes(1);
+      expect(notifyReceivedMock).toHaveBeenCalledWith('name', 'ver', 'name/ver/orto/8/64/544.png');
+    });
+
+    it('should return 200 status code  without saving when binary png is received with query filename  and file exist', async function () {
+      notifyReceivedMock.mockResolvedValue(undefined);
+      fileExistsMock.mockResolvedValue(false);
+
+      const response = await requestSender.sendFile('name/ver/orto/8/64/544.png', Buffer.from('tests'), true);
+
+      expect(response.status).toBe(httpStatusCodes.OK);
+      expect(response).toSatisfyApiSpec();
+      expect(fileExistsMock).toHaveBeenCalledTimes(1);
       expect(saveFileMock).toHaveBeenCalledTimes(1);
       expect(saveFileMock).toHaveBeenCalledWith('name/ver/orto/8/64/544.png', expect.any(Readable));
       expect(notifyReceivedMock).toHaveBeenCalledTimes(1);
@@ -81,6 +114,7 @@ describe('fileReceiver', function () {
       const response = await requestSender.sendFile('name/ver/orto/8/64/544.json', Buffer.from('tests json'), true);
       expect(response.status).toBe(httpStatusCodes.OK);
       expect(response).toSatisfyApiSpec();
+      expect(fileExistsMock).toHaveBeenCalledTimes(0);
       expect(saveFileMock).toHaveBeenCalledTimes(0);
       expect(notifyReceivedMock).toHaveBeenCalledTimes(1);
       expect(notifyReceivedMock).toHaveBeenCalledWith('name', 'ver', 'name/ver/orto/8/64/544.json', 'tests json');

@@ -34,4 +34,14 @@ export class S3StorageProvider implements IStorageProvider {
     const params = { Bucket: this.bucket, Key: path, Body: contentStream };
     return this.s3.upload(params).promise();
   }
+
+  public async exists(path: string): Promise<boolean> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const params = { Bucket: this.bucket, Key: path };
+    return this.s3
+      .headObject(params)
+      .promise()
+      .then(() => true)
+      .catch(() => false);
+  }
 }

@@ -1,4 +1,4 @@
-import { promises, createWriteStream } from 'fs';
+import { promises, createWriteStream, constants as fsConstants } from 'fs';
 import { Readable } from 'stream';
 import { dirname, join } from 'path';
 import { inject } from 'tsyringe';
@@ -25,5 +25,12 @@ export class FsStorageProvider implements IStorageProvider {
       contentStream.on('end', accept);
       contentStream.on('error', reject);
     });
+  }
+
+  public async exists(path: string): Promise<boolean> {
+    return promises
+      .access(path, fsConstants.F_OK)
+      .then(() => true)
+      .catch(() => false);
   }
 }
