@@ -10,12 +10,13 @@ export class SyncManagerClient extends HttpClient {
     super(logger, config.get('syncManagerUrl'), 'SyncManager', config.get('httpRetry'));
   }
 
-  public async notifyReceived(resourceId: string, version: string, fileName: string, fileContent?: string): Promise<void> {
+  public async notifyReceived(resourceId: string, version: string, fileName: string, fileContentString?: string): Promise<void> {
+    const fileContent = fileContentString !== undefined ? JSON.parse(fileContentString) as unknown : undefined; 
     const body = {
       resourceId,
       version,
       fileName,
-      fileContent,
+      fileContent
     };
     await this.post('/fileRecived', body);
   }
