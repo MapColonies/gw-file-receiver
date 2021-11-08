@@ -62,7 +62,7 @@ env:
     FS:
       mountRelativeBasePath: 'tiles'
   httpClient:
-    syncManagerUrl: 'http://localhost:5555'
+    syncManagerUrl: 'http://localhost:5555/synchronize'
     retry:
       attempts: 3
       delay: 'exponential'
