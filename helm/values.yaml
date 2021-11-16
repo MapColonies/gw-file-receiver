@@ -53,7 +53,7 @@ env:
       enabled: true # enable to support s3 provider
       endpointUrl: 'http://localhost:9000'
       bucket: 'rasterTiles'
-      sslEnabled: 'true'
+      sslEnabled: 'false'
       secret:
         name: raster-tiles-s3-secret
         createSecret: false # secret should be created on higher level for deployments with multiple services
