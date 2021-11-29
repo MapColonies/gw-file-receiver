@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/MapColonies/gw-file-receiver/compare/v1.1.0...v1.1.1) (2021-11-29)
+
+
+### Bug Fixes
+
+* added support for routeId param ([#5](https://github.com/MapColonies/gw-file-receiver/issues/5)) ([15f91c8](https://github.com/MapColonies/gw-file-receiver/commit/15f91c8222cfda4a49e49e7f2a8f538f0c96d277))
+
 ## 1.1.0 (2021-11-08)
 
 

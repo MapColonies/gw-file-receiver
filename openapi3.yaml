@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: gw-file-receiver
   description: synchronization file receiver service
-  version: 1.1.0
+  version: 1.1.1
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -22,7 +22,6 @@ paths:
           name: filename
           schema:
             type: string
-        #route id param for gw compatibility
         - in: query
           name: routeId
           schema:
