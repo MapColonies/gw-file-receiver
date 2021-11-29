@@ -22,6 +22,11 @@ paths:
           name: filename
           schema:
             type: string
+        #route id param for gw compatibility
+        - in: query
+          name: routeId
+          schema:
+            type: string
       requestBody:
         content:
           application/octet-stream:
