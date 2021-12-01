@@ -17,14 +17,15 @@ export class FileReceiverController {
 
   public receiveFile: ReceiveFileHandler = async (req, res, next) => {
     try {
-      let filenameHeader = req.headers['filename'] as string | undefined;
-      if (filenameHeader != undefined) {
-        filenameHeader = decodeURIComponent(filenameHeader);
-      }
-      const filePath = filenameHeader ?? req.query.filename;
+      const filenameHeader = req.headers['filename'] as string | undefined;
+      const filenameQuery = req.query.filename;
+
+      let filePath = filenameHeader ?? filenameQuery;
       if (filePath === undefined) {
         throw new BadRequestError('"filename" is required in header or query');
       }
+
+      filePath = decodeURIComponent(filePath);
       await this.manager.saveFile(filePath, req);
       return res.sendStatus(httpStatus.OK);
     } catch (err) {
