@@ -30,6 +30,10 @@ spec:
         run: {{ $releaseName }}-{{ $chartName }}
         {{- include "gw-file-receiver.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if .Values.cloudProvider.imagePullSecretName }}
+      imagePullSecrets:
+        - name: {{ .Values.cloudProvider.imagePullSecretName | quote }}
+      {{- end }}
       {{- if .Values.storage.tilesPvc.enabled }}
       volumes:
         - name: tiles-volume
