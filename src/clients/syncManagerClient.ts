@@ -18,6 +18,6 @@ export class SyncManagerClient extends HttpClient {
       fileName,
       fileContent,
     };
-    await this.post('/fileRecived', body);
+    await this.post('/synchronize/fileRecived', body);
   }
 }
