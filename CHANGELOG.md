@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.4](https://github.com/MapColonies/gw-file-receiver/compare/v1.1.2...v1.1.4) (2022-01-27)
+
+
+### Bug Fixes
+
+* added helm pull secret support ([#7](https://github.com/MapColonies/gw-file-receiver/issues/7)) ([91e3a7f](https://github.com/MapColonies/gw-file-receiver/commit/91e3a7f3258a3df646a4b5916f73f56b4d113e76))
+* change NiFi route to match other services ([#8](https://github.com/MapColonies/gw-file-receiver/issues/8)) ([3f0748d](https://github.com/MapColonies/gw-file-receiver/commit/3f0748d97be7b4a3fbf2ed06330e805e8cf3eeee))
+* eslint ([2758627](https://github.com/MapColonies/gw-file-receiver/commit/27586276e6bf1c2750b0e6ec56e2c7f3294a4fa8))
+
 ### [1.1.3](https://github.com/MapColonies/gw-file-receiver/compare/v1.1.2...v1.1.3) (2022-01-27)
 
 
