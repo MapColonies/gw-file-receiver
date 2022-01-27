@@ -1,5 +1,5 @@
-import { Logger } from '@map-colonies/js-logger';
 import { join as pathJoin } from 'path';
+import { Logger } from '@map-colonies/js-logger';
 import { BadRequestError } from '@map-colonies/error-types';
 import { RequestHandler } from 'express';
 import httpStatus from 'http-status-codes';
