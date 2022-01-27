@@ -15,3 +15,5 @@ export const SERVICES: Record<string, symbol> = {
   STORAGE_PROVIDER: Symbol('StorageProvider'),
 };
 /* eslint-enable @typescript-eslint/naming-convention */
+
+export const FILENAME_SAPERATOR_CHARACTER = '~~';
