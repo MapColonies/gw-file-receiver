@@ -1,3 +1,4 @@
+import { join as pathJoin } from 'path';
 import { Logger } from '@map-colonies/js-logger';
 import { BadRequestError } from '@map-colonies/error-types';
 import { RequestHandler } from 'express';
@@ -5,7 +6,6 @@ import httpStatus from 'http-status-codes';
 import { injectable, inject } from 'tsyringe';
 import { FILENAME_SAPERATOR_CHARACTER, SERVICES } from '../../common/constants';
 import { FileReceiverManager } from '../models/fileReceiverManager';
-import { join as pathJoin } from 'path';
 
 interface ReceiveFileQuery {
   filename?: string;
@@ -33,7 +33,7 @@ export class FileReceiverController {
       next(err);
     }
   };
-  
+
   private gwFilenameToPath(filename: string): string {
     return pathJoin(...filename.split(FILENAME_SAPERATOR_CHARACTER));
   }
