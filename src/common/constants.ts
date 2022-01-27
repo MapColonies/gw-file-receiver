@@ -14,6 +14,4 @@ export const SERVICES: Record<string, symbol> = {
   METER: Symbol('Meter'),
   STORAGE_PROVIDER: Symbol('StorageProvider'),
 };
-
-export const FILENAME_SAPERATOR_CHARACTER = '~~';
 /* eslint-enable @typescript-eslint/naming-convention */

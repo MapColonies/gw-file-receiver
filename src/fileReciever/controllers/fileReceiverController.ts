@@ -1,10 +1,9 @@
-import { join as pathJoin } from 'path';
 import { Logger } from '@map-colonies/js-logger';
 import { BadRequestError } from '@map-colonies/error-types';
 import { RequestHandler } from 'express';
 import httpStatus from 'http-status-codes';
 import { injectable, inject } from 'tsyringe';
-import { FILENAME_SAPERATOR_CHARACTER, SERVICES } from '../../common/constants';
+import { SERVICES } from '../../common/constants';
 import { FileReceiverManager } from '../models/fileReceiverManager';
 
 interface ReceiveFileQuery {
@@ -26,15 +25,11 @@ export class FileReceiverController {
         throw new BadRequestError('"filename" is required in header or query');
       }
 
-      filePath = this.gwFilenameToPath(filePath);
+      filePath = decodeURIComponent(filePath);
       await this.manager.saveFile(filePath, req);
       return res.sendStatus(httpStatus.OK);
     } catch (err) {
       next(err);
     }
   };
-
-  private gwFilenameToPath(filename: string): string {
-    return pathJoin(...filename.split(FILENAME_SAPERATOR_CHARACTER));
-  }
 }
