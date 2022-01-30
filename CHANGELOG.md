@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.5](https://github.com/MapColonies/gw-file-receiver/compare/v1.1.4...v1.1.5) (2022-01-30)
+
+
+### Bug Fixes
+
+* query params to match sync worker ([#11](https://github.com/MapColonies/gw-file-receiver/issues/11)) ([d0b29cf](https://github.com/MapColonies/gw-file-receiver/commit/d0b29cfcfcd129b2d087cf28e90a67718bb9c047))
+
 ### [1.1.4](https://github.com/MapColonies/gw-file-receiver/compare/v1.1.2...v1.1.4) (2022-01-27)
 
 
