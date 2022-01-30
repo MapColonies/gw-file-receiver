@@ -23,9 +23,13 @@ paths:
           schema:
             type: string
         - in: query
-          name: routeId
+          name: routeID
           schema:
             type: string
+        - in: query
+          name: filesize
+          schema:
+            type: string            
       requestBody:
         content:
           application/octet-stream:
