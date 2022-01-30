@@ -29,7 +29,7 @@ paths:
         - in: query
           name: filesize
           schema:
-            type: string            
+            type: string
       requestBody:
         content:
           application/octet-stream:
