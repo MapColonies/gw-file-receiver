@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/MapColonies/gw-file-receiver/compare/v1.1.6...v1.2.0) (2022-03-06)
+
+
+### Features
+
+* add support for nifi gw app key ([#13](https://github.com/MapColonies/gw-file-receiver/issues/13)) ([0363812](https://github.com/MapColonies/gw-file-receiver/commit/036381261b3290b4ebdbebdae76f9bba0c8a1a76))
+
 ### [1.1.6](https://github.com/MapColonies/gw-file-receiver/compare/v1.1.4...v1.1.6) (2022-01-30)
 
 
