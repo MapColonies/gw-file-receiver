@@ -3,6 +3,5 @@ export interface IS3Config {
   secretAccessKey: string;
   endpointUrl: string;
   bucket: string;
-  objectKey: string;
   sslEnabled: boolean;
 }

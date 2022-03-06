@@ -55,6 +55,7 @@
   },
   "storageProvider": "STORAGE_PROVIDER",
   "syncManagerUrl": "SYNC_MANAGER_URL",
+  "syncManagerAppKey": "SYNC_MANAGER_APP_KEY",
   "httpRetry": {
     "attempts": {
       "__name": "HTTP_RETRY_ATTEMPTS",
