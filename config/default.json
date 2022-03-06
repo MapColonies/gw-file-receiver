@@ -38,7 +38,8 @@
     "basePath": "tiles"
   },
   "storageProvider": "FS",
-  "syncManagerUrl": "http://localhost:5555/synchronize",
+  "syncManagerUrl": "http://localhost:5555",
+  "syncManagerAppKey": "",
   "httpRetry": {
     "attempts": 3,
     "delay": "exponential",
