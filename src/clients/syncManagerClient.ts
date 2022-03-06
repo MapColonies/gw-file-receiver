@@ -10,11 +10,11 @@ export class SyncManagerClient extends HttpClient {
   public constructor(@inject(SERVICES.CONFIG) config: IConfig, @inject(SERVICES.LOGGER) logger: Logger) {
     super(logger, config.get('syncManagerUrl'), 'SyncManager', config.get('httpRetry'));
     this.appKey = config.get('syncManagerAppKey');
-    if (this.appKey != ''){
+    if (this.appKey != '') {
       this.axiosOptions.headers = {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        'App-Key': this.appKey
-      }
+        'App-Key': this.appKey,
+      };
     }
   }
 
