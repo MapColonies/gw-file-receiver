@@ -20,6 +20,16 @@ image:
   repository: gw-file-receiver
   tag: 'latest'
 
+authentication:  
+  ca:
+    enabled: false
+    useExternal: false
+    externalSecretName: ""
+  ssl:
+    enabled: false
+    useExternal: false
+    externalSecretName: ""
+
 storage:
   storageClass: local-storage
   accessModes: ReadWriteOnce
